@@ -1,6 +1,6 @@
 import { Client } from "pg";
 
-export default async function query(queryObject) {
+export const query = async (queryObject) => {
   const client = new Client({
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
@@ -18,4 +18,6 @@ export default async function query(queryObject) {
   } finally {
     await client.end();
   }
-}
+};
+
+export default { query };

@@ -7,6 +7,7 @@ export const query = async (queryObject) => {
     host: process.env.POSTGRES_HOST,
     port: process.env.POSTGRES_PORT,
     user: process.env.POSTGRES_USER,
+    ssl: _getSSL()
   });
 
   try {
@@ -19,5 +20,11 @@ export const query = async (queryObject) => {
     await client.end();
   }
 };
+
+function _getSSL() {
+  if (process.env.POSTGRES_CA) return { ca: process.env.POSTGRES_CA };
+
+  return process.env.NODE_ENV === "production";
+} 
 
 export default { query };
